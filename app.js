@@ -33,13 +33,13 @@ const isAdmin = (req, res, next) => {
   });
 
   // Get all tests with associated questions
-app.get('/testquestion', isAdmin, async (req, res) => {
-    const testsWithQuestions = await prisma.test.findMany({
+app.get('/users', isAdmin, async (req, res) => {
+    const users = await prisma.test.findMany({
       include: {
         questions: true,
       },
     });
-    res.json(testsWithQuestions);
+    res.json(users);
   });
   
 
