@@ -5,6 +5,12 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const app = express();
 const role = 'isAdmin'
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
 
 app.use(bodyParser.json());
 
@@ -31,17 +37,6 @@ const isAdmin = (req, res, next) => {
     };
     next();
   });
-
-  // Get all tests with associated questions
-app.get('/users', isAdmin, async (req, res) => {
-    const users = await prisma.test.findMany({
-      include: {
-        questions: true,
-      },
-    });
-    res.json(users);
-  });
-  
 
 // Create a new user
 app.post('/users', async (req, res) => {
@@ -76,10 +71,4 @@ app.delete('/users/:id', async (req, res) => {
   });
 
   res.json(deletedUser);
-});
-
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
 });
